@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: About me
 ---
 
 # About
@@ -15,4 +15,4 @@ A little about me.
 
 My work generally focuses on social network analysis within the area of virtual worlds. I have a particular interest in exploring emergent behavior and embedded networks within online communities, you can see my complete CV [here](https://dl.dropboxusercontent.com/u/81001516/jccvMAY2014.pdf)
 
-->![Me](http://i.imgur.com/5Cr6erp.jpg)
+![Me](http://i.imgur.com/5Cr6erp.jpg)
