@@ -1,30 +1,18 @@
 ---
 layout: page
-title: About
+title: About me
 ---
 
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
+# About
 
-In the novel, *The Strange Case of Dr. Jeykll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+A little about me.
 
-There are currently two themes built on Poole:
+ * I am currently a doctoral candidate at [the Annenberg School for Communication](http://annenberg.usc.edu/)
+ * My research has been featured at [CHI](http://chi2014.acm.org/), [CSCW](http://cscw.acm.org/2015/), [ICA](http://www.icahdq.org/conf/), [Sunbelt](http://www.insna.org/) and other venues.
+ * I have worked for Riot Games and Facebook as a quantitative researcher/analyst.
+ * I help teach graduate statistics and methods at the Annenberg School.
 
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
 
-Learn more and contribute on [GitHub](https://github.com/poole).
+My work generally focuses on social network analysis within the area of virtual worlds. I have a particular interest in exploring emergent behavior and embedded networks within online communities, you can see my complete CV [here](https://dl.dropboxusercontent.com/u/81001516/jccvMAY2014.pdf)
 
-## Setup
-
-Some fun facts about the setup of this project include:
-
-* Built for [Jekyll](http://jekyllrb.com)
-* Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-* Coded with [Sublime Text 2](http://sublimetext.com), an amazing code editor
-* Designed and developed while listening to music like [Blood Bros Trilogy](https://soundcloud.com/maddecent/sets/blood-bros-series)
-
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
-
-Thanks for reading!
+![Me](http://i.imgur.com/5Cr6erp.jpg)
