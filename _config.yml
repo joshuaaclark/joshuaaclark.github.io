@@ -10,8 +10,8 @@ relative_permalinks: true
 title:            Josh Clark
 tagline:          'Research, Methods, Data'
 description:      'Teaching resources and research about virtual worlds, social network analysis and open data'
-url:              joshuaaclark.github.io
-baseurl:          joshuaaclark.github.io
+url:              http://joshuaaclark.github.io/
+baseurl:          /
 
 author:
   name:           'Joshua Clark'
