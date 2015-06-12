@@ -10,7 +10,7 @@ relative_permalinks: true
 title:            Josh Clark
 tagline:          'Research, Methods, Data'
 description:      'Teaching resources and research about virtual worlds, social network analysis and open data'
-url:              http://hyde.getpoole.com
+url:              http://joshuaaclark.github.io/
 baseurl:          /
 
 author:
@@ -23,4 +23,4 @@ paginate:         5
 version:          2.1.0
 
 github:
-  repo:           https://github.com/poole/hyde
+  repo:           https://github.com/joshuaaclark/
