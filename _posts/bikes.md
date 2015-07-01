@@ -1,5 +1,77 @@
+
 ---
 layout: post
-title: Bike Thefts in LA
+title: 'To Live, Ride and Have Your Bike Stolen in LA'
+author: Joshua Clark
+date: July 1, 2015
 ---
-<iframe src="https://jclark.shinyapps.io/bike3/" style="border: none; width: 800px; height: 800px"></iframe>
+
+Last week my bike was stolen,  someone cut the chain and carried it off from the parking lot of my complex. I'm sure that a bit of time and an angle grinder will take care of the u-lock  and  my Giant Escape will be out on the streets again after three years of faithful service. While I could have secured my bike better by keeping it inside (if only I had the space) this entire ordeal has had me wondering about bike theft in Los Angeles as a whole. How common is it? Are there certain spots or times where I shouldn't leave my bike? 
+
+![Bike in Happier Times](http://i.imgur.com/7KZWN3R.jpg)
+*My bike in happier times.*
+
+Fortunately the city of Los Angeles has opened up a ton of information to the public through their open data portal. I was able to download [the LAPD's 2014 crime statistics which include information on bike theft](https://data.lacity.org/) and do a bit of analysis with R, leaflet and ggplot.
+
+First we need the leaflet package for R. Leaflet is a popular mapping tool which has been used by a bunch of different publications and data scientists. It is primarly written in Java but there is an attachment for R which is pretty easy to use. Also need to attach reshape2 and dplyr for data management and RColorBrewer/ggplot for additional plotting.
+```{r}
+library(ggvis)
+library(shiny)
+library(leaflet)
+library(reshape2)
+library(dplyr)
+library(RColorBrewer)
+library(ggplot2)
+```
+The LAPD crime data includes all of the various offenses over the past year, from petty theft to murder. Right now we are just interested in bike thefts, so let's subset out only those cases which are directly relevant.
+
+```{r}
+cr.d<-read.csv('LAPD_Crime_and_Collision_Raw_Data_-_2014.csv') #Read crime data
+bk.n<-subset(cr.d, grepl('Bike', cr.d$Crm.Cd.Desc, ignore.case=TRUE)) #draw out bike data
+nrow(bk.n) #take a count
+[1] 1147
+```
+This leaves all 1147 cases of *reported* bike theft (important caveat) in the LAPD operation zone in the dataset. With a bit more data munging it is easy to get the dates and locations of the thefts.
+
+```{r}
+bk.n$Date.Rptd<-mdy(bk.n$Date.Rptd) #Make the dates readable for R
+bk.n$Month.Gone<-month(bk.n$Date.Rptd, label=TRUE, abbr=TRUE) #Grab the months
+bk.n$Shade1<-factor(bk.n$Month.Gone, labels=brewer.pal(12, 'Paired')) #assign each month a color
+```
+With regards to location data, five of the cases are missing a latitude and longitude, so let's drop them and split the LAPD's location format into two columns which R can read.
+
+```{r}
+head(bk.n$Location.1) # Take a look at the data
+[1] (34.0779, -118.2844) (34.0483, -118.2111) (34.2355, -118.5885)
+[4] (34.0481, -118.2542) (34.0416, -118.262)  (34.0493, -118.2418)
+bk.n$Location.1<-ifelse(bk.n$Location.1=="", NA, bk.n$Location.1) # Drop blank entries
+bk.n<-bk.n[!is.na(bk.n$Location.1),] 
+bk.n$Location.1<-gsub('\\(|\\)','', bk.n$Location.1) # Lose the brackets
+bk.n<-cbind(bk.n, colsplit(bk.n$Location.1, ',', c("Lat","Long"))) #Split into lat and long
+head(bk.n[,c('Lat','Long')])
+         Lat      Long
+65   34.0779 -118.2844
+111  34.0483 -118.2111
+792  34.2355 -118.5885
+1021 34.0481 -118.2542
+1043 34.0416 -118.2620
+1429 34.0493 -118.2418
+
+```
+With the dates and times sorted out let's get down to exploring the data by looking at the date and time cycles of theft in Los Angeles. My gut tells me that there will be more thefts in the summer months, as kids get off school and lock their bikes poorly. 
+
+```{r}
+ggplot(bk.n, aes(x=Month.Gone, fill=Month.Gone))+
+  geom_bar()+scale_fill_brewer(palette="Paired")+
+  guides(fill=FALSE)
+```
+There is a definite seasonal trend to the thefts, but less than I would have expected.  Apparently if you are going to be risky with your bike storage do it in February!
+
+Of course LA is a big town, so there are going to be variations in theft rates based on the particular neighborhood where you live or work. Using the awesome new [ggvis](http://ggvis.rstudio.com/) package it is possible to explore these differences with a dynamic version of the barchart with the results broken down by LAPD operating region. You can see a map of what areas these various divisions encompass on the [LA Time's excellent mapping LA website](http://maps.latimes.com/lapd/division/central/)
+
+<iframe src="http://128.125.238.89:3838/josh/bikegraph/" style="border: none; width: 440px; height: 500px"></iframe>
+
+Inspired by the Times I realized that by using the leaflet package and the cleaned location data it is also possible to map the various thefts out onto the city itself. 
+
+<iframe src="http://128.125.238.89:3838/josh/bikemap/" style="border: none; width: 440px; height: 500px"></iframe>
+
