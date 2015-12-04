@@ -19,17 +19,17 @@ and capacity to take care of four two day old kittens. Eventually we
 were able to find a foster for them on the Westside but the entire
 process got me thinking, how full are the LA Shelters?
 
-Fortunately the LA Open Data portal has information on all of the
-Intakes to the shelter over the past few years, so with a bit of coding
+Fortunately the [LA Open Data](https://data.lacity.org/) portal has information on all of the
+intakes to the shelter over the past few years, so with a bit of coding
 I could find my answer. After spending some time digging around I
 figured if I was interested there should be at least a few other people
-who might also find my examination interesting and decided to whip up
+who might also find my examination useful and decided to whip up
 this post.
 
 Ok, so with the context out of the way let's load up the data. I'm using
 a CSV downloaded from [this
 page](https://data.lacity.org/A-Well-Run-City/Animal-Services-Intake-Data/8cmr-fbcu)
-but JSON and other formats are available as well.
+but JSON and other formats are available as well. The analysis is all done in [R](https://www.r-project.org/).
 
     asid <- read.csv('Animal_Services_Intake_Data.csv')
     nrow(asid)
@@ -79,16 +79,13 @@ smoothed like to each animal type.
 
     ggplot(asid.intake.date, aes(x=Date, y=Count, color=Animal.Type))+geom_smooth()
 
-    ## geom_smooth: method="auto" and size of largest group is >=1000, so using gam with formula: y ~ s(x, bs = "cs"). Use 'method = x' to change the smoothing method.
-
 ![](http://i.imgur.com/7C1KMJN.png)
 
 Clearly if you are going to adopt do it in the summer, that's when the
 shelters get the most new residents.
 
 The eight shelters in Los Angeles are in very different parts of the
-city. From the more rural necks of the valley to the built up N. East
-and Central areas. We can view this breakdown in a heatmap with each row
+city. We can view this breakdown in a grid chart with each row
 showing the % composition of that shelter's population broken down by
 animal type.
 
