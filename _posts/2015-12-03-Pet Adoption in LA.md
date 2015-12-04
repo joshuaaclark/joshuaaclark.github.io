@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Mapping Adoption in LA'
+title: 'Investigating the LA Shelter Data'
 author: Joshua Clark
 date: December 3rd, 2015
 ---
@@ -75,14 +75,13 @@ that.
 There is some clear year over year cyclicality for cats whereas dogs
 display a more consistent trend. Birds also appear to be the most prone
 to extremely high outliers. We can clean up the data by fitting a
-smoothed like to each animal type.
+smoothed regression curve for each animal type.
 
     ggplot(asid.intake.date, aes(x=Date, y=Count, color=Animal.Type))+geom_smooth()
 
 ![](http://i.imgur.com/7C1KMJN.png)
 
-Clearly if you are going to adopt do it in the summer, that's when the
-shelters get the most new residents.
+Clearly the shelters get the most new reisdents in the summer months. 
 
 The eight shelters in Los Angeles are in very different parts of the
 city. We can view this breakdown in a grid chart with each row
@@ -96,7 +95,9 @@ animal type.
 ![](http://i.imgur.com/904habm.png)
 
 Dogs clearly dominate in the N.East while the Annex, W. Valley and W LA
-Shelters have a surprising amount of birds.
+Shelters have a surprising amount of birds. 
+
+For dogs we also have a lot information on the different breeds. Let's break out this data and see what breeds are the most common in LA's animal shelters.
 
     asid.dog <- subset(asid, Animal.Type == 'DOG')
     asid.dog.tab <- subset(data.frame(table(asid.dog$Breed.1)), Freq > 100)
@@ -116,12 +117,12 @@ followed by Pit Bulls. Let's take a look at cats
 A lot less variety here, with the big catch-all category of domestic
 short hair being the most common donation.
 
-Finally we can use the apriori algorithm to search through the various
+Finally we can use the [apriori algorithm](https://en.wikipedia.org/wiki/Apriori_algorithm) to search through the various
 combinations in the data frame. This tells us what permutations of
 shelter/animal and other factor appear together most commonly, so we can
 classify each shelter by it's most common patterns. We need to subset
 the data down a little beforehand because otherwise we will get
-uninformative rules like "Chihuahuas tend to be Dogs" (NO SHIT!)
+uninformative rules like "Chihuahuas tend to be Dogs." 
 
     asid$month <- factor(month(asid$Date))
     pet.rules <- apriori(asid[,c('Shelter', 'Intake.Condition', 'Intake.Type', 'Animal.Type', 'month' )])
