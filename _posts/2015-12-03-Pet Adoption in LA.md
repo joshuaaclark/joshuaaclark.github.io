@@ -13,7 +13,7 @@ noteworthy traits is that the was adopted from an LA County shelter.
 ![Hero Dog](http://i.imgur.com/gFVTjLv.jpg)
 
 Fast forward a few years and I was trying to find a home for a box of
-newborn kittens that was left out on the street in Koreatown. While the
+new-born kittens that was left out on the street in Koreatown. While the
 folks at the shelter were really supportive they did not have the space
 and capacity to take care of four two day old kittens. Eventually we
 were able to find a foster for them on the Westside but the entire
@@ -81,7 +81,7 @@ smoothed regression curve for each animal type.
 
 ![](http://i.imgur.com/7C1KMJN.png)
 
-Clearly the shelters get the most new reisdents in the summer months. 
+Clearly the shelters get the most new residents in the summer months. 
 
 The eight shelters in Los Angeles are in very different parts of the
 city. We can view this breakdown in a grid chart with each row
@@ -349,7 +349,7 @@ lift means that we can be pretty confident that it is a cat.
 
 Judging by these rules, extremely young animals also tend to be cats,
 and there are more stray cats. Dogs are more likely to be taken in
-alive, especially at the E. Vally and S. LA Shelters. The association
+alive, especially at the E. Valley and S. LA Shelters. The association
 between cats being turned into shelters as strays is interesting given
 the recent [Kitten Convict
 project](http://explodingkittens.com/kittyconvict) which highlights the
@@ -361,3 +361,4 @@ So, the moral of the story is short haired cats, Chihuahuas, Pit Bulls
 all end up in shelters in LA. Furthermore a lot of people drop off
 extremely young cats. So if you've got room in your home consider going
 to [Pet Harbor](http://petharbor.com) and adopting any animal!
+
