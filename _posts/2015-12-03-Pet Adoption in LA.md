@@ -1,3 +1,10 @@
+---
+layout: post
+title: 'Mapping Adoption in LA'
+author: Joshua Clark
+date: December 3rd, 2015
+---
+
 Shortly after I moved to Los Angeles four years ago I met Macho, my
 girlfriend's dog. Macho is a Chihuahua and despite not really liking
 tiny dogs he charmed me rather quickly. However one of Macho's other
