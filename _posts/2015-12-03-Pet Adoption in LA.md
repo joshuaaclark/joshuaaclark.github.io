@@ -167,22 +167,199 @@ uninformative rules like "Chihuahuas tend to be Dogs" (NO SHIT!)
     ## creating S4 object  ... done [0.01s].
 
     subrules <- pet.rules[round(quality(pet.rules)$lift, digits=1) != 1]
-    inspect(subrules)
+   library(stargazer)
 
-    ##   lhs                             rhs                        support confidence     lift
-    ## 1 {Intake.Condition=< 8 WEEKS} => {Animal.Type=CAT}        0.1008353  0.8106626 2.381636
-    ## 2 {Intake.Condition=< 8 WEEKS} => {Intake.Type=STRAY}      0.1117739  0.8986029 1.421885
-    ## 3 {Intake.Type=OWNER SUR}      => {Intake.Condition=ALIVE} 0.1783862  0.8666960 1.062696
-    ## 4 {Animal.Type=CAT}            => {Intake.Type=STRAY}      0.2803196  0.8235478 1.303124
-    ## 5 {Animal.Type=DOG}            => {Intake.Condition=ALIVE} 0.5054080  0.9294012 1.139582
-    ## 6 {Shelter=S LA,                                                                        
-    ##    Animal.Type=DOG}            => {Intake.Condition=ALIVE} 0.1038685  0.9336815 1.144830
-    ## 7 {Intake.Type=OWNER SUR,                                                               
-    ##    Animal.Type=DOG}            => {Intake.Condition=ALIVE} 0.1228990  0.8864921 1.086969
-    ## 8 {Shelter=E VALLEY,                                                                    
-    ##    Animal.Type=DOG}            => {Intake.Condition=ALIVE} 0.1250793  0.9255286 1.134833
-    ## 9 {Intake.Type=STRAY,                                                                   
-    ##    Animal.Type=DOG}            => {Intake.Condition=ALIVE} 0.2962744  0.9363355 1.148084
+    ## 
+    ## Please cite as: 
+    ## 
+    ##  Hlavac, Marek (2015). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+    ##  R package version 5.2. http://CRAN.R-project.org/package=stargazer
+
+    stargazer(as(subrules, 'data.frame'), type="html", summary=FALSE)
+
+<table style="text-align:center">
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+rules
+</td>
+<td>
+support
+</td>
+<td>
+confidence
+</td>
+<td>
+lift
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+2
+</td>
+<td>
+Intake.Condition=\< 8 WEEKS =\> Animal.Type=CAT
+</td>
+<td>
+0.101
+</td>
+<td>
+0.811
+</td>
+<td>
+2.382
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+3
+</td>
+<td>
+Intake.Condition=\< 8 WEEKS =\> Intake.Type=STRAY
+</td>
+<td>
+0.112
+</td>
+<td>
+0.899
+</td>
+<td>
+1.422
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+7
+</td>
+<td>
+Intake.Type=OWNER SUR =\> Intake.Condition=ALIVE
+</td>
+<td>
+0.178
+</td>
+<td>
+0.867
+</td>
+<td>
+1.063
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+8
+</td>
+<td>
+Animal.Type=CAT =\> Intake.Type=STRAY
+</td>
+<td>
+0.280
+</td>
+<td>
+0.824
+</td>
+<td>
+1.303
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+9
+</td>
+<td>
+Animal.Type=DOG =\> Intake.Condition=ALIVE
+</td>
+<td>
+0.505
+</td>
+<td>
+0.929
+</td>
+<td>
+1.140
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+10
+</td>
+<td>
+Shelter=S LA,Animal.Type=DOG =\> Intake.Condition=ALIVE
+</td>
+<td>
+0.104
+</td>
+<td>
+0.934
+</td>
+<td>
+1.145
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+11
+</td>
+<td>
+Intake.Type=OWNER SUR,Animal.Type=DOG =\> Intake.Condition=ALIVE
+</td>
+<td>
+0.123
+</td>
+<td>
+0.886
+</td>
+<td>
+1.087
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+12
+</td>
+<td>
+Shelter=E VALLEY,Animal.Type=DOG =\> Intake.Condition=ALIVE
+</td>
+<td>
+0.125
+</td>
+<td>
+0.926
+</td>
+<td>
+1.135
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+13
+</td>
+<td>
+Intake.Type=STRAY,Animal.Type=DOG =\> Intake.Condition=ALIVE
+</td>
+<td>
+0.296
+</td>
+<td>
+0.936
+</td>
+<td>
+1.148
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
 
 Each rule gets' three criteria. Support is the proportion of cases that
 fit the rule over all of cases. Confidence is the proportion of cases
