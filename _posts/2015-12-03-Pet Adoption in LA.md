@@ -55,25 +55,10 @@ that.
 
     library(lubridate)
     library(plyr)
-
-    ## 
-    ## Attaching package: 'plyr'
-    ## 
-    ## The following object is masked from 'package:lubridate':
-    ## 
-    ##     here
-
     library(scales)
     library(ggplot2)
     library(arules)
-
-    ## Loading required package: Matrix
-    ## 
-    ## Attaching package: 'arules'
-    ## 
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     abbreviate, %in%, write
+    library(stargazer)
 
     asid$Date <- parse_date_time(asid$Intake.Date, 'm/d/Y', tz='PST')
     table(year(asid$Date))
@@ -167,14 +152,6 @@ uninformative rules like "Chihuahuas tend to be Dogs" (NO SHIT!)
     ## creating S4 object  ... done [0.01s].
 
     subrules <- pet.rules[round(quality(pet.rules)$lift, digits=1) != 1]
-   library(stargazer)
-
-    ## 
-    ## Please cite as: 
-    ## 
-    ##  Hlavac, Marek (2015). stargazer: Well-Formatted Regression and Summary Statistics Tables.
-    ##  R package version 5.2. http://CRAN.R-project.org/package=stargazer
-
     stargazer(as(subrules, 'data.frame'), type="html", summary=FALSE)
 
 <table style="text-align:center">
