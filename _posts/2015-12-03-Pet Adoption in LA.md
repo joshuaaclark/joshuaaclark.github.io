@@ -10,14 +10,14 @@ girlfriend's dog. Macho is a Chihuahua and despite not really liking
 tiny dogs he charmed me rather quickly. However one of Macho's other
 noteworthy traits is that the was adopted from an LA County shelter.
 
-![Hero Dog](http://i.imgur.com/hzRDAbZ.jpg)
+![Hero Dog](http://i.imgur.com/gFVTjLv.jpg)
 
 Fast forward a few years and I was trying to find a home for a box of
 newborn kittens that was left out on the street in Koreatown. While the
 folks at the shelter were really supportive they did not have the space
 and capacity to take care of four two day old kittens. Eventually we
 were able to find a foster for them on the Westside but the entire
-process got me thinking, how full are the LA Shelters.
+process got me thinking, how full are the LA Shelters?
 
 Fortunately the LA Open Data portal has information on all of the
 Intakes to the shelter over the past few years, so with a bit of coding
