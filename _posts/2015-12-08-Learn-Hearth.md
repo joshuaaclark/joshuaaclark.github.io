@@ -167,6 +167,8 @@ count as an example. Let's build the network!
 
 ![](http://i.imgur.com/t9JHyXD.png)
 
+*I know this looks like crap, updated plot coming soon!*
+
 Currently there are multiple edges connecting some nodes. So if there is
 a card that appears two of a player's three decks the card edge will be
 linked by two edges. For simplicity these muti-edges can be collapsed
