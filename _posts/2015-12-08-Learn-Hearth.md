@@ -178,7 +178,7 @@ beforehand are collapsed into one with a weight value of 2.
 
     plot(hearth.w.net, vertex.color= V(hearth.w.net)$type, vertex.size = 3, vertex.label=NA, edge.color=ifelse(E(hearth.w.net)$weight>1, 'red', 'black'), layout=l)
 
-![](http://i.imgur.com/b5e2eMV.png
+![](http://i.imgur.com/b5e2eMV.png)
 
 Let's transform the bipartite network into two other ones. The first
 only consists of cards, each edge between two cards means that they are
