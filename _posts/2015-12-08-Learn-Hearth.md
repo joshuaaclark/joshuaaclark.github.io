@@ -2,7 +2,7 @@
 layout: post
 title: 'Learning to play Hearthstone, with DATA!'
 author: Joshua Clark
-date: December 3rd, 2015
+date: December 8th, 2015
 ---
 
 I've recently started to play Hearthstone, and I'm absolutely awful. I
@@ -11,8 +11,8 @@ some really frustrating closes loses (usually my own fault). In an
 attempt to get better I noticed that Blizzard posted [the deck
 lists](http://us.battle.net/hearthstone/en/blog/19960161/decklists-of-champions-11-11-2015)
 from the World Championships at BlizzCon. In the comments
-[Yrill](http://reddit.com/u/yrill) collected a data file on all of the
-decks and made a really cool Tableau dashboard. Inspired by his efforts
+[Yriii](https://www.reddit.com/user/Yriii) collected a data file on all of the
+decks and made a really [cool Tableau dashboard](http://tabsoft.co/1SJpMlG) (go check it out, it is awesome). Inspired by his efforts
 and wanting to up my own game I downloaded the data and decided to do
 some quick network analysis and visualization with R, igraph and
 ggplot2.
