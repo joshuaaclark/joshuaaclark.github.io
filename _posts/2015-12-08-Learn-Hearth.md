@@ -1,7 +1,6 @@
-
 ---
 layout: post
-title: 'Learning Hearthstone, with DATA!'
+title: 'Learning to play Hearthstone, with DATA!'
 author: Joshua Clark
 date: December 3rd, 2015
 ---
@@ -114,9 +113,6 @@ Wiki](http://wiki.teamliquid.net/hearthstone/2015_Hearthstone_World_Championship
 
     ## Joining by: "player.name"
 
-    ## Warning in left_join_impl(x, y, by$x, by$y): joining factor and character
-    ## vector, coercing into character vector
-
     ggplot(player.ref, aes(x=location, y=wins)) + geom_boxplot()
 
 ![](http://i.imgur.com/SpD2NCX.png)
@@ -204,7 +200,7 @@ cards their decks have in common.
 
 ![](http://i.imgur.com/q0WL2O3.png)
 
-First up is the card deck. Let's compute some centrality measures.
+First up is the card deck. Let's compute some [network centrality measures](https://en.wikipedia.org/wiki/Centrality).
 Centrality refers to the position of a given node (card) within the
 network. There are a couple different centrality measures. Closeness
 centrality is the "Kevin Bacon" card of the tournament. Like the seven
@@ -1139,9 +1135,6 @@ they relate to success within the tournament.
     player.ref<- left_join(player.ref, player.details)
 
     ## Joining by: c("player.name", "wins", "location")
-
-    ## Warning in left_join_impl(x, y, by$x, by$y): joining factor and character
-    ## vector, coercing into character vector
 
     player.conv<-ddply(player.ref, 'Player.Name', summarize, 
           tot.convention=sum(convention),
