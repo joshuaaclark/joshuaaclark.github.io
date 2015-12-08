@@ -117,10 +117,10 @@ Wiki](http://wiki.teamliquid.net/hearthstone/2015_Hearthstone_World_Championship
 
 ![](http://i.imgur.com/SpD2NCX.png)
 
-An EU player won the tournament it is interesting how clustered all the
+An EU player won the tournament so their distribution as the highest ceiling, it is also interesting how clustered all the
 players from the Asia-Pacific region are in performance.
 
-The interesting thing about decks is that each card doesn't operate
+The fun thing about decks is that each card doesn't operate
 independently. Combos and other strategies often depend on chains of
 cards being in the deck at the same time. Most statistical measures
 consider each case as independent, so each card in a deck is a stand
