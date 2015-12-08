@@ -1162,3 +1162,5 @@ results are encouraging as my play style so far has been to mess with
 odd or unusual deck compositions. Who knows maybe I'll find a killer
 combo or build and start climbing the ladder. Until then I'll see you in
 the 15-20 ranks.
+
+[Josh](http://twitter.com/joshuaaclark)
