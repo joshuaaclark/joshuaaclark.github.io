@@ -1149,7 +1149,7 @@ they relate to success within the tournament.
 ![](http://i.imgur.com/ogcGU6H.png)
 
 There is a clear trend towards more novel decks also winning more.
-HOWEVER it isn't statistically significant, so it isn't possible to say
+HOWEVER it isn't statistically significant, so it may be
 that these results are due to chance. This is in part due to the small
 sample (16 players), so if anyone has a big database of decks and win
 rates let me know! Might be fun to test this technique in a more robust
