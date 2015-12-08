@@ -1155,6 +1155,8 @@ sample (16 players), so if anyone has a big database of decks and win
 rates let me know! Might be fun to test this technique in a more robust
 setting.
 
+This analysis has a number of limitations. I didn't take the time to pull the head to head match ups to see if novel or conventional decks one at each round. Additionally a lot of the statistics are aggregated upwards to the player or deck level instead of looking at the micro-interactions between pairs or triads of cards. Still, I hope it has provided some insight and hopefully it will help me (and others) player a little better.
+
 So there we have it. My Hearthstone win rate hasn't gotten much better
 but this was a fun little exploration into the decks being used by the
 best of the best. I highly doubt I'll ever be at that level but these
