@@ -1,0 +1,93 @@
+---
+title: "Exploring the Exit Poll Data and Random Thoughts on Peer Review"
+author: "Josh Clark"
+date: "June 16, 2016"
+output: md_document
+---
+
+At work today I noticed some tweets talking about a new study out of Stanford which demonstrates that the Democratic primary election was "stolen" from Bernie Sanders. This piqued my interest, being a fan of stats and I followed the [links to find the paper](https://drive.google.com/file/d/0B6mLpCEIGEYGSlRsV0IxV1ByXzQ/view) by Axel Geijsel and Rodolfo Cortes Barragan which compares various metrics and exit polls to show that states without a "paper trail" were more likely to support Clinton.
+
+I read the study and my first reaction was a raised eyebrow for two reasons. 
+
+The first is theoretical. Exit polling is an inexact but important process. If there are distortions in the sampling process of the poll it can lead to quite different results from the final tally. There have been some notable examples from the UK such as the infamous ["Shy Tory"](https://en.wikipedia.org/wiki/Shy_Tory_Factor) problem where the Conservative support in the UK elections was constantly under-estimated by the exit polls well outside the margin of error. The reason behind these errors is the fact that the margin of error is not gospel. It assumes that the sample is representative of the voting population. In the UK, the tendency of Labour supporters to harangue their Tory counterparts meant that Conservatives were "shy" and more likely to lie on the exit polls. As a result the assumption supporting the margin of error was violated. There have been other documented cases in various other elections around the world. This isn't to say exit polls are always inaccurate or useless, far from it, but they are [imperfect tools](http://www.theguardian.com/commentisfree/2012/jun/06/outraged-wisconsin-exit-polls-so-wrong) and I am sure there will be a series of post postmortems to discuss why there have been errors outside the confidence interval this time around.
+
+That being said, the sampling argument is largely theoretical. The paper by Geijsel and Barragan delves into the numbers. The central variable for the authors is the distinction between paper trail and not having a paper trail based on Ballotpedia. My political science chops are almost six years out of date and I have no reason to question the distinction. But I was curious about whether there may be intervening variables that could influence the study.
+
+To their credit the authors [published their data](https://docs.google.com/spreadsheets/d/1cszGOhbmHDTHH5ntaGPmeX55RgMMaoBhgqO1Wx-9TRk/edit#gid=0), so I grabbed a CSV version of their data set that showed support for Clinton versus not and slammed it into R.
+
+```{r}
+ep<-read.csv('exit-polls.csv') #Read the data
+head(ep) #Take a look see
+```
+
+Looking good, there are several models within the paper, the comparison between results and exit polls I'm not going to substantially explore in this post because a) it's late and b) the exit polls sampling question remains relatively open. I don't disagree with the general premise of the results that Clinton tended to out perform her exit polls. I'm more curious as to why.
+
+The question is are these instances of out performance systemically related the presence or absence of a paper trail. Let's start by looking at the difference between the results and the exit polls by difference the two from each other. From there a simple two sample t-test will say if there is a statistically significant average discrepancy in states with or without a paper trail.
+
+
+```{r}
+ep$diff <- ep$Support.for.Clinton.in.Results - ep$Support.for.Clinton.in.Exit.Polls #Difference the two polling numbers
+head(ep)
+t.ep <- t.test(diff~Paper.Trail, data = ep) #Compare the means
+t.ep #Overlap
+```
+And to visualize the differences
+```{r}
+library(ggplot2) #For pretty graphs! <3 u Hadley
+ggplot(ep, aes(x = diff, fill = Paper.Trail)) + geom_histogram(color = 'black') + xlab('Difference') + ylab('Count') #Histogram
+ggplot(ep, aes(y = diff, x = Paper.Trail, fill = Paper.Trail)) + geom_boxplot() #Boxplot
+```
+
+Woah, Arizona was wayyyyy off. While this state is listed as having a paper trail the election was quite a mess. Most commentators have associated this mess with the Republican State Government and both Clinton and Sanders sued over the results. Let's strike that case and re-run the results to see if they change. Still, with this first batch there is no statistically significant difference in the gap between results and the exit polls across the two classes of states (based on this data).
+
+```{r}
+ep.no.az <- subset(ep, State != 'Arizona') #Leaving Arizona out
+t.ep.2 <- t.test(diff ~ Paper.Trail, data = ep.no.az) #Redo
+t.ep.2 #Nada
+
+ggplot(ep.no.az, aes(x = diff, fill = Paper.Trail)) + geom_histogram(color = 'black') + xlab('Difference') + ylab('Count')
+ggplot(ep.no.az, aes(y = diff, x = Paper.Trail, fill = Paper.Trail)) + geom_boxplot()
+```
+
+Still no significant result.
+
+In their [appendix](https://docs.google.com/document/d/1SdmBLFW9gISaqOyyz_fATgaFupI2-n6vWx80XRGUVBo/edit) the authors also present a regression model that controls for the proportion of Latino/Hispanic individuals in a state and the relative "blueness" of the state as well. The author's didn't present raw data for this particular model so I can't replicate the blueness factor of the state without scraping a bunch of data, and as I said, it is late and I have to work tomorrow. However I did find a population breakdown from the [Kaiser Foundation](http://kff.org/other/state-indicator/distribution-by-raceethnicity/#), a well respected health policy institute. 
+
+I was a little confused why the authors only controlled for the Hispanic population of a state. [A significant trend in the election was Sanders' support among the White population while Clinton tended to win the African American vote](http://fivethirtyeight.com/features/clinton-is-winning-the-states-that-look-like-the-democratic-party/). 
+
+```{r}
+library(dplyr)
+race.data <- read.csv('raw_data.csv', stringsAsFactors = FALSE) #Read the data
+race.data[race.data == 'N/A'] <- NA #Turn missing data into a format R likes
+race.data$Asian <- as.numeric(race.data$Asian) #Clean up
+race.data$Two.Or.More.Races <- as.numeric(race.data$Two.Or.More.Races)
+head(race.data)
+race.data[,c('White','Black','Hispanic','Asian', 'Two.Or.More.Races')] <- race.data[,c('White','Black','Hispanic','Asian', 'Two.Or.More.Races')]*100 #Rescale so that the regression coefs are expressed as per one percentage point change
+head(race.data)
+combo.data <- left_join(ep, race.data, by=c('State'='Location')) #join
+paper.only.mod<-lm(Support.for.Clinton.in.Results ~  Paper.Trail + Hispanic, data = combo.data) #OG model - blueness
+summary(paper.only.mod) #Paper trail checks in 
+```
+That a version of the original model, although admittedly lacking the control for blueness. It shows a significant negative effect similar to that in the appendix of the Geijsel and Barragan paper. However when we add the other major racial categories into the mix the results shift
+
+```{r}
+fin.mod<-lm(Support.for.Clinton.in.Results ~  Paper.Trail + White + Black + Hispanic + Asian, data = combo.data, na.action = na.exclude) #refit
+summary(fin.mod) #nada
+combo.data$pred <- predict(fin.mod) 
+ggplot(combo.data, aes(y = Support.for.Clinton.in.Results, x = Black, shape = Paper.Trail)) + geom_point(color = 'red') + geom_point(aes(y = pred, ), color = 'blue') + ggtitle("Predicted vs Actual Results, Red = Actual, Blue = Predicted") + xlab("% of Black Voters in State")
+```
+
+Two things to note, first, the effect of their being a paper trail become statistically insignificant. Second while nothing else is significant the coefficients pass the smell test based on what we know about the election.  Additionally the Adjusted R-Squared, which is a crude metric for the fit of the model is much higher than the version that did not feature the rate of African Americans. 
+
+The lack of significance is not particularly surprising given the small sample size here. Even still several observations were dropped due to incomplete demographic data. Let's re-run the model with only the Black and Latino populations as they are the only groups which have complete datasets from Kaiser Foundation.
+
+```{r}
+black.hispanic.mod<-lm(Support.for.Clinton.in.Results ~  Paper.Trail + White + Black + Hispanic, data = combo.data) #Another model
+summary(black.hispanic.mod) #let's see
+```
+
+The findings generally hold up with the complete demographic dataset.
+
+To sum up, the picture is complicated. The Sanders campaign is an energetic and interesting political force and one that should and will be studied by researchers and policy makers moving forward. However based on the evidence presented in the Geijsel and Barragan paper I am not sure if I agree with their strong claims. Academic peer review is important, and if I was reviewing this paper I'd want to see further modelling and investigation into the data sources. I'm not claiming that the models that I am presenting here are perfect, by no means. As I stated earlier, it is late and I'm drinking a beer writing this as my dog sleeps in my lap. What I am claiming is that the data needs to be unpacked, the issues surrounding sampling need to be explored and further features added to the models before I am personally convinced that this election was stolen. IF you feel differently than more power too you, and I'd be interested in iterating on these models going forward. If you'd like to take a crack at it the code and data files are on my github, otherwise, I'm going to bed.
+
+
