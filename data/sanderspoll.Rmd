@@ -1,5 +1,5 @@
 ---
-title: "Exploring the Exit Poll Data and Random Thoughts on Peer Review"
+title: ""
 author: "Josh Clark"
 date: "June 16, 2016"
 output: md_document
@@ -79,14 +79,25 @@ ggplot(combo.data, aes(y = Support.for.Clinton.in.Results, x = Black, shape = Pa
 
 Two things to note, first, the effect of their being a paper trail become statistically insignificant. Second while nothing else is significant the coefficients pass the smell test based on what we know about the election.  Additionally the Adjusted R-Squared, which is a crude metric for the fit of the model is much higher than the version that did not feature the rate of African Americans. 
 
-The lack of significance is not particularly surprising given the small sample size here. Even still several observations were dropped due to incomplete demographic data. Let's re-run the model with only the Black and Latino populations as they are the only groups which have complete datasets from Kaiser Foundation.
+The lack of significance is not particularly surprising given the small sample size here. Even still several observations were dropped due to incomplete demographic data. Let's re-run the model with only the Black and Latino populations as they are the only groups which have complete datasets from Kaiser Foundation. Additionally there is probably a multicolinearity issue because I dumped so many correlated metrics into the regression (the more white people there are in a state, the few minorities, multicolinearlity can mess with OLS regression).
 
 ```{r}
 black.hispanic.mod<-lm(Support.for.Clinton.in.Results ~  Paper.Trail + White + Black + Hispanic, data = combo.data) #Another model
 summary(black.hispanic.mod) #let's see
+library(car)
+vif(black.hispanic.mod)
 ```
 
-The findings generally hold up with the complete demographic dataset.
+The high VIF, variable inflation factor means we have a real issue with multicolinearity, this could suppress some effects. Let's drop the metric for white voters as it has the highest variable inflation factor and simply consider the presence or absence of black or Hispanic voters.
+
+```{r}
+black.hispanic.mod2<-lm(Support.for.Clinton.in.Results ~  Paper.Trail +  Black + Hispanic, data = combo.data) #Another model
+summary(black.hispanic.mod2) #let's see
+library(car)
+vif(black.hispanic.mod2)
+```
+
+The findings generally hold up with the complete demographic data set. **Namely, once you control for demographics the effect of a state having or not having a paper trail becomes statistically insignificant, running contrary to the reported results in the earlier paper.** This fits with what the polling has been saying. States with higher minority population are more likely to support Clinton, and the paper trail variable is statistically insignificant by comparison. While this does not prove that nothing shady took place it does mean that the strong conclusions of the original paper may need to be tempered or re-evaluated.
 
 To sum up, the picture is complicated. The Sanders campaign is an energetic and interesting political force and one that should and will be studied by researchers and policy makers moving forward. However based on the evidence presented in the Geijsel and Barragan paper I am not sure if I agree with their strong claims. Academic peer review is important, and if I was reviewing this paper I'd want to see further modelling and investigation into the data sources. I'm not claiming that the models that I am presenting here are perfect, by no means. As I stated earlier, it is late and I'm drinking a beer writing this as my dog sleeps in my lap. What I am claiming is that the data needs to be unpacked, the issues surrounding sampling need to be explored and further features added to the models before I am personally convinced that this election was stolen. IF you feel differently than more power too you, and I'd be interested in iterating on these models going forward. If you'd like to take a crack at it the code and data files are on my github, otherwise, I'm going to bed.
 
